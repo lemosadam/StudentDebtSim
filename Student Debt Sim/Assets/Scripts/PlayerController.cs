@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float minScale = 0.5f;
     public float maxScale = 10.0f;
 
+    private float rotationSpeed = 10f;
     private float currentScale;
     private float timeSinceLastScaleChange;
 
@@ -31,6 +32,12 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = transform.TransformDirection(movement);
 
         rb.velocity = moveDirection * speed;
+
+        if (movement != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
 
         if (Time.time - timeSinceLastScaleChange >= 1.0f)
         {
