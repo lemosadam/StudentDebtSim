@@ -3,7 +3,7 @@ using UnityEngine;
 public class CoinCollector : MonoBehaviour
 {
     public string playerTag = "Player"; 
-    public float shrinkAmount = 0.1f; 
+    public float shrinkAmount = 0.2f; 
 
     private void OnTriggerEnter(Collider other)
     {

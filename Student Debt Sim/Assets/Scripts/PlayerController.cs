@@ -5,12 +5,12 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     private Rigidbody rb;
 
-    public float growthRate = 0.1f;
+    public float growthRate = 0.05f;
     public float originalScale = 1.0f;
     public float minScale = 0.5f;
     public float maxScale = 10.0f;
 
-    private float rotationSpeed = 10f;
+    private float turnSpeed = 90f;
     private float currentScale;
     private float timeSinceLastScaleChange;
 
