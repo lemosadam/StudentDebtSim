@@ -5,8 +5,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     private Rigidbody rb;
 
-    public float growthRate = 0.1f;  
-    public float originalScale = 1.0f;  
+    public float growthRate = 0.1f;
+    public float originalScale = 1.0f;
     public float minScale = 0.5f;
     public float maxScale = 10.0f;
 
@@ -24,29 +24,29 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+        // Get input for movement
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(verticalInput, 0.0f, horizontalInput).normalized;
+        // Manually swap input directions
+        float newVerticalInput = horizontalInput;
+        float newHorizontalInput = -verticalInput;
 
-        Vector3 moveDirection = transform.TransformDirection(movement);
+        // Calculate the movement vector
+        Vector3 movement = new Vector3(newHorizontalInput, 0.0f, newVerticalInput).normalized;
 
-        rb.velocity = moveDirection * speed;
+        // Apply the movement directly to the Rigidbody
+        rb.velocity = movement * speed;
 
-        if (movement != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
-
+        // Handle scaling growth
         if (Time.time - timeSinceLastScaleChange >= 1.0f)
         {
             Grow();
             timeSinceLastScaleChange = Time.time;
         }
-
     }
-   
+
     void Grow()
     {
         currentScale += growthRate;
@@ -65,6 +65,27 @@ public class PlayerController : MonoBehaviour
         transform.localScale = new Vector3(currentScale, currentScale, currentScale);
     }
 
- 
+    public void DoubleSpeed()
+    {
+        speed *= 2.0f;
+    }
+
+    public void HalveSpeed()
+    {
+        speed *= 0.5f;
+    }
+
+    public void DoubleCoinShrinkFactor()
+    {
+        currentScale *= 2.0f;
+        ApplyScale();
+    }
+
+    public void HalveCoinShrinkFactor()
+    {
+        currentScale *= 0.5f;
+        ApplyScale();
+    }
 }
+
 

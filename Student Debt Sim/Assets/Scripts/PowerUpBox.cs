@@ -10,12 +10,11 @@ public class PowerUpBox : MonoBehaviour
     GameObject purpleWalls;
     GameObject blueWalls;
 
-
     // Start is called before the first frame update
     void Start()
     {
         playerSphere = GameObject.Find("PlayerSphere");
-        PlayerController playerController = playerSphere.GetComponent<PlayerController>();
+        playerController = playerSphere.GetComponent<PlayerController>();
         orangeWalls = GameObject.Find("orange walls");
         purpleWalls = GameObject.Find("purple walls");
         blueWalls = GameObject.Find("blue walls");
@@ -24,43 +23,96 @@ public class PowerUpBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void SpeedDoubles()
     {
-        
+        Debug.Log("Speed Doubles");
+        playerController.DoubleSpeed();
     }
 
     void RateHalves()
     {
-
+        Debug.Log("Rate Halves");
+        playerController.HalveSpeed();
     }
 
     void CoinsDouble()
     {
-
+        Debug.Log("Coins Double");
+        playerController.DoubleCoinShrinkFactor();
     }
 
     void CoinsHalf()
     {
-
+        Debug.Log("Coins Half");
+        playerController.HalveCoinShrinkFactor();
     }
 
     void openOrange()
     {
+        Debug.Log("Open Orange Door");
         orangeWalls.SetActive(false);
     }
 
     void openPurple()
     {
+        Debug.Log("Open Purple Door");
         purpleWalls.SetActive(false);
     }
 
     void openBlue()
     {
+        Debug.Log("Open Blue Door");
         blueWalls.SetActive(false);
     }
 
+    // Function to handle collision with the power-up box
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Handle the random event when the player collides with the power-up box
+            HandleRandomEvent();
 
+            // Destroy the power-up box after it's collected
+            Destroy(gameObject);
+        }
+    }
+
+    void HandleRandomEvent()
+    {
+        int randomEvent = Random.Range(1, 8);
+
+        switch (randomEvent)
+        {
+            case 1:
+                SpeedDoubles();
+                break;
+            case 2:
+                RateHalves();
+                break;
+            case 3:
+                CoinsDouble();
+                break;
+            case 4:
+                CoinsHalf();
+                break;
+            case 5:
+                openOrange();
+                break;
+            case 6:
+                openPurple();
+                break;
+            case 7:
+                openBlue();
+                break;
+            default:
+                // Handle unexpected event (you can log an error, do nothing, or take appropriate action)
+                Debug.LogError("Unknown random event: " + randomEvent);
+                break;
+        }
+    }
 }
+
