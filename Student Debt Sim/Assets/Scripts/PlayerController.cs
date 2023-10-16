@@ -25,21 +25,27 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        // Get input for movement
+
         float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
 
-        // Manually swap input directions
-        float newVerticalInput = horizontalInput;
-        float newHorizontalInput = -verticalInput;
+        // Check for A key press to rotate the player sphere to the left
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            transform.Rotate(Vector3.up, -90.0f);
+        }
+        
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            transform.Rotate(Vector3.up, 90.0f);
+        }
 
-        // Calculate the movement vector
-        Vector3 movement = new Vector3(newHorizontalInput, 0.0f, newVerticalInput).normalized;
+        float verticalInput = -Input.GetAxis("Vertical"); 
+        Vector3 movement = new Vector3(verticalInput, 0.0f, 0.0f).normalized;
 
-        // Apply the movement directly to the Rigidbody
-        rb.velocity = movement * speed;
+        Vector3 moveDirection = transform.TransformDirection(movement);
 
-        // Handle scaling growth
+        rb.velocity = moveDirection * speed;
+
         if (Time.time - timeSinceLastScaleChange >= 1.0f)
         {
             Grow();

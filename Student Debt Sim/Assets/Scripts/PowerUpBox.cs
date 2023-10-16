@@ -68,15 +68,14 @@ public class PowerUpBox : MonoBehaviour
         blueWalls.SetActive(false);
     }
 
-    // Function to handle collision with the power-up box
+  
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Handle the random event when the player collides with the power-up box
+           
             HandleRandomEvent();
 
-            // Destroy the power-up box after it's collected
             Destroy(gameObject);
         }
     }
@@ -109,7 +108,7 @@ public class PowerUpBox : MonoBehaviour
                 openBlue();
                 break;
             default:
-                // Handle unexpected event (you can log an error, do nothing, or take appropriate action)
+                
                 Debug.LogError("Unknown random event: " + randomEvent);
                 break;
         }
