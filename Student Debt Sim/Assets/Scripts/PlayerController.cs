@@ -10,9 +10,15 @@ public class PlayerController : MonoBehaviour
     public float minScale = 0.5f;
     public float maxScale = 10.0f;
 
+    public GameObject gameOver;
+
     private float turnSpeed = 90f;
     private float currentScale;
     private float timeSinceLastScaleChange;
+
+    
+
+
 
     void Start()
     {
@@ -20,6 +26,8 @@ public class PlayerController : MonoBehaviour
         currentScale = originalScale;
         timeSinceLastScaleChange = Time.time;
         ApplyScale();
+        gameOver = GameObject.Find("GameOver");
+        gameOver.SetActive(false);
     }
 
     void Update()
@@ -50,6 +58,11 @@ public class PlayerController : MonoBehaviour
         {
             Grow();
             timeSinceLastScaleChange = Time.time;
+        }
+
+        if (currentScale >= 2.5f)
+        {
+            gameOver.SetActive(true);
         }
     }
 
